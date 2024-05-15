@@ -205,7 +205,7 @@ Integração Lambda-API concluída.
 
 ### Rodando
 
-1. Use o JSON a seguir para criar um item na tabela do DynamoDB:
+1. Use o JSON a seguir para criar um item na tabela do DynamoDB (aqui usei https://hoppscotch.io/ para enviar o método POST):
 
 ```json
 {
@@ -220,13 +220,17 @@ Integração Lambda-API concluída.
 }
 ```
 
-    ![Execute from Postman](./images/create-from-postman.jpg)
+![Executar hoppscotch1](./images/criar-item-1.jpg)
+
+Segundo item:
+
+![Executar hoppscotch2](./images/criar-item-2.jpg)
 
 2. Para validar que o item foi inserido , vá para o Dynamo console, selecione a tabela "lambda-apigateway", selecione a guia "Items" e veja o novo item inserido.
 
-![Dynamo Item](./images/dynamo-item.jpg)
+![Dynamo Item](./images/tabela-1.png)
 
-3. Insira mais alguns intens na tabela e use a operação "list" para listar todos os itens:
+3. Insira mais um item na tabela e use a operação "list" para listar todos os itens:
 
 ```json
 {
@@ -236,6 +240,14 @@ Integração Lambda-API concluída.
     }
 }
 ```
-![List Dynamo Items](./images/dynamo-item-list.jpg)
+![List Dynamo Items](./images/listar-itens.jpg)
+
+Delete um item como teste:
+
+![Deletar Item](./images/deletar-item.jpg)
+
+Verifique novamente:
+
+![Dynamo Item](./images/tabela-2.png)
 
 O microsserviço serverless acaba de ser criado usando API Gateway, Lambda e DynamoDB.
