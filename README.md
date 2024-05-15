@@ -1,21 +1,19 @@
-# LevelUp! Lab for Serverless
+# Microsserviço AWS para atualização de banco de dados
 
-## Lab Overview And High Level Design
+## Design
 
-Let's start with the High Level Design.
 ![High Level Design](./images/high-level-design.jpg)
-An Amazon API Gateway is a collection of resources and methods. For this tutorial, you create one resource (DynamoDBManager) and define one method (POST) on it. The method is backed by a Lambda function (LambdaFunctionOverHttps). That is, when you call the API through an HTTPS endpoint, Amazon API Gateway invokes the Lambda function.
 
-The POST method on the DynamoDBManager resource supports the following DynamoDB operations:
+O método POST suporta as seguintes operações no DynamoDB:
 
-* Create, update, and delete an item.
-* Read an item.
-* Scan an item.
-* Other operations (echo, ping), not related to DynamoDB, that you can use for testing.
+* Criar, atualizar e deletar um item.
+* Ler um item.
+* Scanear um item.
+* Outras para teste (echo, ping).
 
-The request payload you send in the POST request identifies the DynamoDB operation and provides necessary data. For example:
+O requerimento de payload enviado pelo POST identifica a operação do DynamoDB e provê os dados necessários.
 
-The following is a sample request payload for a DynamoDB create item operation:
+Um exemplo de operação de criação:
 
 ```json
 {
@@ -29,7 +27,8 @@ The following is a sample request payload for a DynamoDB create item operation:
     }
 }
 ```
-The following is a sample request payload for a DynamoDB read item operation:
+Um exemplo de leitura:
+
 ```json
 {
     "operation": "read",
@@ -44,17 +43,17 @@ The following is a sample request payload for a DynamoDB read item operation:
 
 ## Setup
 
-### Create Lambda IAM Role 
-Create the execution role that gives your function permission to access AWS resources.
+### Criar um Lambda IAM Role 
 
-To create an execution role
+Dá permissão para sua função acessar recursos da AWS.
 
-1. Open the roles page in the IAM console.
-2. Choose Create role.
-3. Create a role with the following properties.
+1. Abrir Roles no IAM console.
+2. Criar Role.
+3. Usar propriedades:
     * Trusted entity – Lambda.
     * Role name – **lambda-apigateway-role**.
-    * Permissions – Custom policy with permission to DynamoDB and CloudWatch Logs. This custom policy has the permissions that  the function needs to write data to DynamoDB and upload logs. 
+    * Permissions – Copiar o código seguinte para dar permissão para o Lambda modificar o banco de dados e criar logs:
+       
     ```json
     {
     "Version": "2012-10-17",
@@ -86,14 +85,13 @@ To create an execution role
     }
     ```
 
-### Create Lambda Function
+### Criar a função Lambda
 
-**To create the function**
-1. Click "Create function" in AWS Lambda Console
+1. Clicar "Create function" no AWS Lambda Console
 
 ![Create function](./images/create-lambda.jpg)
 
-2. Select "Author from scratch". Use name **LambdaFunctionOverHttps** , select **Python 3.7** as Runtime. Under Permissions, select "Use an existing role", and select **lambda-apigateway-role** that we created, from the drop down
+2. Select "Author from scratch". Use name **LambdaFunctionOverHttps**, select **Python 3.7** as Runtime. Under Permissions, select "Use an existing role", and select **lambda-apigateway-role** that we created, from the drop down
 
 3. Click "Create function"
 
